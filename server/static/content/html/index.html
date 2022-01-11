@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="us">
+<head>
+    <meta charset="utf-8">
+    <title>SecureBox</title>
+    <link href="css/jquery-ui.css" rel="stylesheet">
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+</head>
+<body>
+<h1>Welcome</h1>
+</script>
+
+<div class="all-classes-container"></div>
+
+<div id="init">
+    <label>Loading...</label>
+    <div id="init-progressbar"></div>
+    <div id="status"></div>
+</div>
+
+<script>
+    $(function () {
+        $("#init-progressbar").progressbar({
+            value: false
+        });
+        $("button").on("click", function (event) {
+            var target = $(event.target),
+                progressbar = $("#init-progressbar"),
+                progressbarValue = progressbar.find(".ui-progressbar-value");
+
+            if (target.is("#numButton")) {
+                progressbar.progressbar("option", {
+                    value: Math.floor(Math.random() * 100)
+                });
+            } else if (target.is("#colorButton")) {
+                progressbarValue.css({
+                    "background": '#' + Math.floor(Math.random() * 16777215).toString(16)
+                });
+            } else if (target.is("#falseButton")) {
+                progressbar.progressbar("option", "value", false);
+            }
+        });
+    });
+
+    checkStatusOnSuccess = function(result) {
+        $( "#status" ).html( "<strong>" + result + "</strong>" );
+    }
+
+    $.ajax({
+        url: "/api/status?update=true",
+        success: checkStatusOnSuccess,
+    });
+
+
+</script>
+</body>
+</html>
